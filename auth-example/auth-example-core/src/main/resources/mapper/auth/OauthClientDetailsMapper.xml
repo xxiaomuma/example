@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.xiaomuma.auth.example.core.crud.modules.auth.dao.OauthClientDetailsDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="pers.xiaomuma.auth.example.core.crud.modules.auth.domain.OauthClientDetails">
+        <id column="client_id" property="clientId" />
+        <result column="resource_ids" property="resourceIds" />
+        <result column="client_secret" property="clientSecret" />
+        <result column="scope" property="scope" />
+        <result column="authorized_grant_types" property="authorizedGrantTypes" />
+        <result column="web_server_redirect_uri" property="webServerRedirectUri" />
+        <result column="authorities" property="authorities" />
+        <result column="access_token_validity" property="accessTokenValidity" />
+        <result column="refresh_token_validity" property="refreshTokenValidity" />
+        <result column="additional_information" property="additionalInformation" />
+        <result column="autoapprove" property="autoapprove" />
+    </resultMap>
+
+    <select id="queryClientByClientId" resultMap="BaseResultMap">
+        select client_id, CONCAT('{noop}',client_secret) as client_secret, resource_ids, scope,
+		       authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity,
+			   refresh_token_validity, additional_information, autoapprove
+		from oauth_client_details where client_id = #{clientId} order by client_id
+    </select>
+
+</mapper>
